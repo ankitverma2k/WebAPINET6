@@ -9,13 +9,23 @@ namespace Repository
 {
     public class RepositoryManager : IRepositoryManager
     {
-        public ICompanyRepository CompanyRepository => throw new NotImplementedException();
+        private readonly RepositoryContext _context;
+        private readonly Lazy<ICompanyRepository> _companyRepository;
+        private readonly Lazy<IEmployeeRepository> _employeeRepository;
 
-        public IEmployeeRepository EmployeeRepository => throw new NotImplementedException();
-
-        public void Save()
+        public RepositoryManager(RepositoryContext repositoryContext)
         {
-            throw new NotImplementedException();
+            _context = repositoryContext;
+            _companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(repositoryContext));
+            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(repositoryContext));
         }
+
+
+        public ICompanyRepository CompanyRepository => _companyRepository.Value;
+
+        public IEmployeeRepository EmployeeRepository => _employeeRepository.Value;
+
+        public void Save() => _context.SaveChanges();
+
     }
 }

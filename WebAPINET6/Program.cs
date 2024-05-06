@@ -12,7 +12,7 @@ LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nl
 
 builder.Services.ConfigureCors();
 builder.Services.ConfigureLoggerService();
-
+builder.Services.ConfigureRepositoryManager();
 
 var app = builder.Build();
 
