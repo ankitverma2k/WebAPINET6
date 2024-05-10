@@ -20,8 +20,7 @@ namespace Service
 
         public IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges)
         {
-            try
-            {
+            
                 var companies = _repositoryManager.CompanyRepository.GetAllCompanies(trackChanges);
                 //var companiesDto = companies
                 //    .Select(c => new CompanyDto(c.Id, c.Name ?? "", string.Join(' ', c.Address, c.Country))).ToList();
@@ -29,12 +28,7 @@ namespace Service
 
 
                 return companiesDto;
-            }
-            catch (Exception ex)
-            {
-                _loggerManager.LogError($"Something went wrong in the {nameof(GetAllCompanies)} service method {ex}");
-                throw;
-            }
+           
         }
     }
 }

@@ -1,3 +1,4 @@
+using Contracts;
 using Microsoft.AspNetCore.Mvc.Filters;
 using NLog;
 using WebAPINET6.Extensions;
@@ -22,7 +23,10 @@ builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
+var logger = app.Services.GetRequiredService<ILoggerManager>(); 
+app.ConfigureExceptionHandler(logger); 
+if (app.Environment.IsProduction())
+    app.UseHsts();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 app.UseAuthorization();
@@ -57,7 +61,7 @@ app.UseAuthorization();
 //{
 //    Console.WriteLine("Middleware 2 starts");
 //    await context.Response.WriteAsync("Hello from Terminal Middleware");
-    
+
 
 //});
 app.MapControllers();
