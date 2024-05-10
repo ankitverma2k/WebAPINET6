@@ -8,7 +8,7 @@ namespace Service.Contracts
 {
     public interface IServiceManager
     {
-        ICompanyService CompanyService { get; }
-        IEmployeeService EmployeeService { get; }
+        public ICompanyService CompanyService { get; }
+        public IEmployeeService EmployeeService { get; }
     }
 }
