@@ -20,15 +20,23 @@ namespace Service
 
         public IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges)
         {
-            
-                var companies = _repositoryManager.CompanyRepository.GetAllCompanies(trackChanges);
-                //var companiesDto = companies
-                //    .Select(c => new CompanyDto(c.Id, c.Name ?? "", string.Join(' ', c.Address, c.Country))).ToList();
-                var companiesDto =_mapper.Map<IEnumerable<CompanyDto>>(companies);
+
+            var companies = _repositoryManager.CompanyRepository.GetAllCompanies(trackChanges);
+            //var companiesDto = companies
+            //    .Select(c => new CompanyDto(c.Id, c.Name ?? "", string.Join(' ', c.Address, c.Country))).ToList();
+            var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
 
 
-                return companiesDto;
-           
+            return companiesDto;
+
+        }
+
+        public CompanyDto GetCompanyById(Guid companyId, bool trackChanges)
+        {
+            var company = _repositoryManager.CompanyRepository.GetCompany(companyId, trackChanges);
+            //Check if the company is null
+            var companyDto = _mapper.Map<CompanyDto>(company);
+            return companyDto;
         }
     }
 }
