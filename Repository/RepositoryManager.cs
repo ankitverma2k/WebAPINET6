@@ -16,8 +16,8 @@ namespace Repository
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _context = repositoryContext;
-            _companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(repositoryContext));
-            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(repositoryContext));
+            _companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(_context));
+            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(_context));
         }
 
 

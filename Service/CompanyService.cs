@@ -21,13 +21,24 @@ namespace Service
 
         public CompanyDto CreateCompany(CompanyForCreationDto company)
         {
-            var companyEntity=_mapper.Map<Company>(company);
+            var companyEntity = _mapper.Map<Company>(company);
             _repositoryManager.CompanyRepository.CreateCompany(companyEntity);
             _repositoryManager.Save();
 
-            var companyToReturn=_mapper.Map<CompanyDto>(companyEntity);
+            var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
 
             return companyToReturn;
+        }
+
+        public void DeleteCompany(Guid companyId, bool trackChanges)
+        {
+            var company = _repositoryManager.CompanyRepository.GetCompany(companyId, trackChanges: false);
+            if (company is null)
+                throw new CompanyNotFoundException(companyId);
+
+            _repositoryManager.CompanyRepository.DeleteCompany(company);
+
+            _repositoryManager.Save();
         }
 
         public IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges)
@@ -48,7 +59,7 @@ namespace Service
             var company = _repositoryManager.CompanyRepository.GetCompany(companyId, trackChanges);
             //Check if the company is null
             var companyDto = _mapper.Map<CompanyDto>(company);
-            if(companyDto is null)
+            if (companyDto is null)
             {
                 throw new CompanyNotFoundException(companyId);
             }

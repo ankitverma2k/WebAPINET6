@@ -9,7 +9,12 @@ namespace Service.Contracts
 {
     public interface IEmployeeService
     {
-        IEnumerable<EmployeeDto>GetEmployees(Guid companyId, bool trackChanges);
+        IEnumerable<EmployeeDto> GetEmployees(Guid companyId, bool trackChanges);
         EmployeeDto GetEmployees(Guid companyId, Guid id, bool trackChanges);
+
+        EmployeeDto CreateEmployeeForCreation(Guid companyId, EmployeeForCreationDto employee, bool trackChanges);
+
+        void DeleteEmployeeForCompany(Guid companyId, Guid id, bool trackChanges);
+
     }
 }

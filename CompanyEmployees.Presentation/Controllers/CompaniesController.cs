@@ -27,8 +27,7 @@ namespace CompanyEmployees.Presentation.Controllers
 
         }
 
-        [HttpGet("{id:guid}", Name ="CompanyById")]
-
+        [HttpGet("{id:guid}", Name = "CompanyById")]
         public IActionResult GetCompanyById(Guid id)
         {
             return Ok(_serviceManager.CompanyService.GetCompanyById(id, false));
@@ -37,7 +36,7 @@ namespace CompanyEmployees.Presentation.Controllers
         [HttpPost]
         public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
         {
-            if(company is null)
+            if (company is null)
             {
                 return BadRequest("CompanyForCreationDto object is null");
 
@@ -46,5 +45,14 @@ namespace CompanyEmployees.Presentation.Controllers
 
             return CreatedAtRoute("CompanyById", new { id = createdCompany.Id }, createdCompany);
         }
+
+        [HttpDelete("{id:guid}")]
+
+        public IActionResult DeleteCompany(Guid id)
+        {
+            _serviceManager.CompanyService.DeleteCompany(id, trackChanges: false);
+            return NoContent();
+        }
+       
     }
 }

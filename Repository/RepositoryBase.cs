@@ -11,31 +11,29 @@ namespace Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected RepositoryContext RepositoryContext;
+        protected RepositoryContext _repositoryContext;
 
-        public RepositoryBase(RepositoryContext repositoryContext)
-        {
-            RepositoryContext = repositoryContext;
-        }
+        public RepositoryBase(RepositoryContext repositoryContext) => _repositoryContext = repositoryContext;
 
-        public void Create(T entity)=>RepositoryContext.Set<T>().Add(entity);
-        
 
-        public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+        public void Create(T entity) => _repositoryContext.Set<T>().Add(entity);
 
-        
+
+        public void Delete(T entity) => _repositoryContext.Set<T>().Remove(entity);
+
+
         public IQueryable<T> FindAll(bool trackChanges) =>
-            !trackChanges ? RepositoryContext.Set<T>().AsNoTracking() :
-            RepositoryContext.Set<T>().AsNoTracking();
+            !trackChanges ? _repositoryContext.Set<T>().AsNoTracking() :
+            _repositoryContext.Set<T>().AsNoTracking();
 
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> condition, bool trackChanges)
-        => !trackChanges ? RepositoryContext.Set<T>()
+        => !trackChanges ? _repositoryContext.Set<T>()
         .Where(condition)
         .AsNoTracking() :
-        RepositoryContext.Set<T>().AsNoTracking();
+        _repositoryContext.Set<T>().AsNoTracking();
 
-        public void Update(T entity) =>RepositoryContext.Set<T>().Update(entity);
-        
+        public void Update(T entity) => _repositoryContext.Set<T>().Update(entity);
+
     }
 }

@@ -15,12 +15,21 @@ namespace Repository
 
         }
 
-        public Employee GetEmployee(Guid companyId, Guid id, bool trackChanges)=>
-        
-            FindByCondition(e => e.CompanyId.Equals(companyId) && e.Id.Equals(id), trackChanges).SingleOrDefault();
-        
+        public void CreateEmployeeForCompany(Guid companyId, Employee employee)
+        {
+            employee.CompanyId = companyId;
+            Create(employee);
+        }
 
-        public IEnumerable<Employee> GetEmployees(Guid companyId, bool trackChanges)=> 
+        public void DeleteEmployee(Employee employee) => Delete(employee);
+
+
+        public Employee GetEmployee(Guid companyId, Guid id, bool trackChanges) =>
+            FindByCondition(e => e.CompanyId.Equals(companyId)
+            && e.Id.Equals(id), trackChanges).SingleOrDefault();
+
+
+        public IEnumerable<Employee> GetEmployees(Guid companyId, bool trackChanges) =>
             FindByCondition(c => c.CompanyId.Equals(companyId), trackChanges).OrderBy(c => c.CompanyId).ToList();
     }
 }
