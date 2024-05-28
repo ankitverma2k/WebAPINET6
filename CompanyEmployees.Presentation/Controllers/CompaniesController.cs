@@ -20,39 +20,33 @@ namespace CompanyEmployees.Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCompanies()
+        public async Task<IActionResult> GetCompanies()
         {
-
-            return Ok(_serviceManager.CompanyService.GetAllCompanies(trackChanges: false));
-
+           return Ok(await _serviceManager.CompanyService.GetAllCompaniesAsync(trackChanges: false));
         }
 
         [HttpGet("{id:guid}", Name = "CompanyById")]
-        public IActionResult GetCompanyById(Guid id)
+        public async Task<IActionResult> GetCompanyById(Guid id)
         {
-            return Ok(_serviceManager.CompanyService.GetCompanyById(id, false));
+            return Ok(await _serviceManager.CompanyService.GetCompanyByIdAsync(id, false));
         }
 
         [HttpPost]
-        public IActionResult CreateCompany([FromBody] CompanyForCreationDto company)
+        public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
             if (company is null)
-            {
                 return BadRequest("CompanyForCreationDto object is null");
-
-            }
-            var createdCompany = _serviceManager.CompanyService.CreateCompany(company);
-
+            var createdCompany = await _serviceManager.CompanyService.CreateCompanyAsync(company);
             return CreatedAtRoute("CompanyById", new { id = createdCompany.Id }, createdCompany);
         }
 
         [HttpDelete("{id:guid}")]
 
-        public IActionResult DeleteCompany(Guid id)
+        public async Task<IActionResult> DeleteCompany(Guid id)
         {
-            _serviceManager.CompanyService.DeleteCompany(id, trackChanges: false);
+            await _serviceManager.CompanyService.DeleteCompanyAsync(id, trackChanges: false);
             return NoContent();
         }
-       
+
     }
 }

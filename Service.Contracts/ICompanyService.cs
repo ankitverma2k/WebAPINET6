@@ -5,11 +5,9 @@ namespace Service.Contracts
 {
     public interface ICompanyService
     {
-        IEnumerable<CompanyDto>GetAllCompanies(bool trackChanges);
-        CompanyDto GetCompanyById(Guid companyId,bool trackChanges);
-
-        CompanyDto CreateCompany(CompanyForCreationDto company);
-
-        void DeleteCompany(Guid companyId, bool trackChanges);
+        Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync(bool trackChanges);
+        Task<CompanyDto> GetCompanyByIdAsync(Guid companyId, bool trackChanges);
+        Task<CompanyDto> CreateCompanyAsync(CompanyForCreationDto company);
+        Task DeleteCompanyAsync(Guid companyId, bool trackChanges);
     }
 }
