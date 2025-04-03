@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 WebAPINET6/internal_logs/internallog.txt
+/WebAPINET6/internal_logs/internallog.txt
