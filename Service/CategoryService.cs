@@ -58,5 +58,22 @@ namespace Service
             var categoryDto = _mapper.Map<CategoryDto>(result);
             return categoryDto;
         }
+
+        public void UpdateCategory(CategoryDto categoryDto)
+        {
+            var category = _repositoryManager.CategoryRepository.GetCategory(categoryDto.Id);
+            if (category != null)
+            {
+                category.Id = categoryDto.Id;
+                category.Name = categoryDto.Name;
+                category.Description = categoryDto.Description;
+                _repositoryManager.CategoryRepository.UpdateCategory(category);
+                _repositoryManager.Save();
+            }
+            else
+            {
+                throw new CategoryNotFoundException(categoryDto.Id);
+            }
+        }
     }
 }

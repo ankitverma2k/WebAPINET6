@@ -14,5 +14,7 @@ namespace Service.Contracts
         CategoryDto GetCategoryById(Guid id);
         void DeleteCategory(Guid id);
 
+        void UpdateCategory(CategoryDto categoryDto);
+
     }
 }
