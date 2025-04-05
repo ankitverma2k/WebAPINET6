@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects
 {
+    [Serializable]
     public record CategoryDto(Guid Id, string ?Name, string? Description);
 }

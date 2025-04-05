@@ -11,9 +11,9 @@ namespace Service
 {
     public class ServiceManager : IServiceManager
     {
-        private readonly Lazy<ICompanyService> _companyService;
-        private readonly Lazy<IEmployeeService> _employeeService;
-        private readonly Lazy<ICategoryService> _categoryService;
+         readonly Lazy<ICompanyService> _companyService;
+         readonly Lazy<IEmployeeService> _employeeService;
+         readonly Lazy<ICategoryService> _categoryService;
         public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager loggerManager, IMapper mapper)
         {
             _companyService = new Lazy<ICompanyService>(() => new CompanyService(repositoryManager, loggerManager, mapper));
@@ -22,7 +22,6 @@ namespace Service
         }
         public ICompanyService CompanyService => _companyService.Value;
         public IEmployeeService EmployeeService => _employeeService.Value;
-
         public ICategoryService CategoryService => _categoryService.Value;
 
     }

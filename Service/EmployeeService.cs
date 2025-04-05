@@ -14,9 +14,9 @@ namespace Service
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IRepositoryManager _repository;
-        private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
+         readonly IRepositoryManager _repository;
+         readonly ILoggerManager _logger;
+         readonly IMapper _mapper;
         public EmployeeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
