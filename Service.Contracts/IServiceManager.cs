@@ -10,5 +10,7 @@ namespace Service.Contracts
     {
         public ICompanyService CompanyService { get; }
         public IEmployeeService EmployeeService { get; }
+
+        public ICategoryService CategoryService { get; }
     }
 }

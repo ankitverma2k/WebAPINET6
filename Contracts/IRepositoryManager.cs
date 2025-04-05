@@ -13,6 +13,8 @@ namespace Contracts
     {
         public ICompanyRepository CompanyRepository { get; }
         public IEmployeeRepository EmployeeRepository { get; }
+
+        public ICategoryRepository CategoryRepository { get; }
         Task SaveAsync();
     }
 }

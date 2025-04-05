@@ -12,12 +12,13 @@ namespace Repository
         private readonly RepositoryContext _context;
         private readonly Lazy<ICompanyRepository> _companyRepository;
         private readonly Lazy<IEmployeeRepository> _employeeRepository;
-
+        private readonly Lazy<ICategoryRepository> _categoryRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _context = repositoryContext;
             _companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(_context));
             _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(_context));
+            _categoryRepository = new Lazy<ICategoryRepository>(() => new CategoryRepository(_context));
         }
 
 
@@ -25,6 +26,7 @@ namespace Repository
 
         public IEmployeeRepository EmployeeRepository => _employeeRepository.Value;
 
+        public ICategoryRepository CategoryRepository => _categoryRepository.Value;
         public Task SaveAsync() => _context.SaveChangesAsync();
 
     }
