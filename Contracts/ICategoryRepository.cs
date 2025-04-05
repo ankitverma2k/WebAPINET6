@@ -14,7 +14,7 @@ namespace Contracts
 
         void DeleteCategory(Category category);
 
-        Category ? GetCategory(int id);
+        Category ? GetCategory(Guid id);
 
         void UpdateCategory(Category category);
     }

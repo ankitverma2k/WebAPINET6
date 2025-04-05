@@ -10,5 +10,7 @@ namespace Service.Contracts
     public interface ICategoryService
     {
         IEnumerable<CategoryDto> GetCategories();
+        Guid AddCategory(CategoryDto categoryDto);
+        CategoryDto GetCategoryById(Guid id);
     }
 }

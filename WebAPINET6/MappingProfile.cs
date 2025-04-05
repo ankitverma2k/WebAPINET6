@@ -18,6 +18,7 @@ namespace WebAPINET6
             CreateMap<EmployeeForCreationDto, Employee>();
             CreateMap<EmployeeForUpdateDto, Employee>();
             CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
         }
     }
 }

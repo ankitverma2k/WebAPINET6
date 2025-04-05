@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Service
 {
@@ -23,11 +20,27 @@ namespace Service
             _mapper = mapper;
         }
 
+        public Guid AddCategory(CategoryDto categoryDto)
+        {
+            var category = _mapper.Map<Category>(categoryDto);
+            category.Id = Guid.NewGuid();
+            _repositoryManager.CategoryRepository.AddCategory(category);
+            _repositoryManager.Save();
+            return category.Id;
+        }
+
         public IEnumerable<CategoryDto> GetCategories()
         {
             var result = _repositoryManager.CategoryRepository.GetCategories().ToList();
             var categoryDto = _mapper.Map<IEnumerable<CategoryDto>>(result);
             _loggerManager.LogInfo("Category Accessed");
+            return categoryDto;
+        }
+
+        public CategoryDto GetCategoryById(Guid id)
+        {
+            var result = _repositoryManager.CategoryRepository.GetCategory(id);
+            var categoryDto = _mapper.Map<CategoryDto>(result);
             return categoryDto;
         }
     }

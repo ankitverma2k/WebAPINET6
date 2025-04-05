@@ -27,7 +27,10 @@ namespace Repository
         public IEmployeeRepository EmployeeRepository => _employeeRepository.Value;
 
         public ICategoryRepository CategoryRepository => _categoryRepository.Value;
+
         public Task SaveAsync() => _context.SaveChangesAsync();
+
+        public void Save()=>_context.SaveChanges();
 
     }
 }

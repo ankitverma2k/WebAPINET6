@@ -25,7 +25,7 @@ namespace Repository
         public IEnumerable<Category> GetCategories() => FindAll(false).OrderBy(x => x.Name);
 
 
-        public Category? GetCategory(int id) => FindByCondition(c => c.Id.Equals(id), false).SingleOrDefault();
+        public Category? GetCategory(Guid id) => FindByCondition(c => c.Id.Equals(id), false).SingleOrDefault();
 
 
 
