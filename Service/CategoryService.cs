@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -27,6 +28,20 @@ namespace Service
             _repositoryManager.CategoryRepository.AddCategory(category);
             _repositoryManager.Save();
             return category.Id;
+        }
+
+        public void DeleteCategory(Guid id)
+        {
+            var category = _repositoryManager.CategoryRepository.GetCategory(id);
+            if (category != null)
+            {
+                _repositoryManager.CategoryRepository.DeleteCategory(category);
+                _repositoryManager.Save();
+            }
+            else
+            {
+                throw new CategoryNotFoundException(id);
+            }
         }
 
         public IEnumerable<CategoryDto> GetCategories()

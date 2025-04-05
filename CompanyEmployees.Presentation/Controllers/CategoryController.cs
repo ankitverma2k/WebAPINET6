@@ -20,7 +20,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCategories()
+        public IActionResult GetCategory()
         {
             return Ok(_serviceManager.CategoryService.GetCategories());
         }
@@ -41,5 +41,14 @@ namespace Presentation.Controllers
             return Ok(category);
 
         }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult DeleteCategory(Guid id)
+        {
+            _serviceManager.CategoryService.DeleteCategory(id);
+
+            return Ok();
+        }
+
     }
 }

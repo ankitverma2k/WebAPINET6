@@ -12,5 +12,7 @@ namespace Service.Contracts
         IEnumerable<CategoryDto> GetCategories();
         Guid AddCategory(CategoryDto categoryDto);
         CategoryDto GetCategoryById(Guid id);
+        void DeleteCategory(Guid id);
+
     }
 }
