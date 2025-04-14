@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Shared.RequestFeatures;
 namespace Presentation.Controllers
 {
     [Route("api/[Controller]")]
@@ -20,36 +20,36 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetCategory()
+        public async Task<IActionResult> GetCategory([FromQuery]  CategoryParameters categoryParameters)
         {
-            return Ok(_serviceManager.CategoryService.GetCategories());
+            return Ok(await _serviceManager.CategoryService.GetAllCategoriesAsync(categoryParameters));
         }
 
         [HttpPost]
-        public IActionResult PostCategories([FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> PostCategories([FromBody] CategoryDto categoryDto)
         {
-            var categoryId = _serviceManager.CategoryService.AddCategory(categoryDto);
+            var categoryId = await _serviceManager.CategoryService.AddCategoryAsync(categoryDto);
             return CreatedAtRoute("GetCategoryById", new { id = categoryId }, value: categoryId);
         }
 
         [HttpGet("{id:guid}", Name = "GetCategoryById")]
-        public IActionResult GetCategory(Guid id)
+        public async Task<IActionResult> GetCategory(Guid id)
         {
-            var category = _serviceManager.CategoryService.GetCategoryById(id);
+            var category = await _serviceManager.CategoryService.GetCategoryByIdAsync(id);
             return Ok(category);
         }
 
         [HttpDelete("{id:guid}")]
-        public IActionResult DeleteCategory(Guid id)
+        public async Task<IActionResult> DeleteCategory(Guid id)
         {
-            _serviceManager.CategoryService.DeleteCategory(id);
+            await _serviceManager.CategoryService.DeleteCategoryAsync(id);
             return Ok();
         }
 
         [HttpPut]
-        public IActionResult UpdateCategory([FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> UpdateCategory([FromBody] CategoryDto categoryDto)
         {
-            _serviceManager.CategoryService.UpdateCategory(categoryDto);
+            await _serviceManager.CategoryService.UpdateCategoryAsync(categoryDto);
             return Ok();
 
         }

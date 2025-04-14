@@ -1,5 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
+using Shared.RequestFeatures;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -22,14 +24,23 @@ namespace Repository
         public void DeleteCategory(Category category) => Delete(category);
 
 
-        public IEnumerable<Category> GetCategories() => FindAll(false).OrderBy(x => x.Name);
+        public IEnumerable<Category> GetAllCategories() => FindAll(false).OrderBy(x => x.Name);
 
+        public async Task<IEnumerable<Category>> GetCategoriesAsync(CategoryParameters categoryParameters)
+        {
+            return await FindAll(false).OrderBy(x => x.Name)
+                .Skip((categoryParameters.PageNumber - 1) * categoryParameters.PageSize)
+                .Take(categoryParameters.PageSize).ToListAsync();
+        }
 
-        public Category? GetCategory(Guid id) => FindByCondition(c => c.Id.Equals(id), false).SingleOrDefault();
+        public Category? GetCategoryById(Guid id) => FindByCondition(c => c.Id.Equals(id), false).SingleOrDefault();
 
+        public async Task<Category?> GetCategoryByIdAsync(Guid id)
+        {
+            return await FindByCondition(x => x.Id.Equals(id), false).SingleOrDefaultAsync();
+        }
 
+        public void UpdateCategory(Category category) => Update(category);
 
-        public void UpdateCategory(Category category)=>Update(category);
-       
     }
 }

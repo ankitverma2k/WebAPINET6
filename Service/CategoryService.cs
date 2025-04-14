@@ -4,7 +4,7 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-
+using Shared.RequestFeatures;
 
 namespace Service
 {
@@ -21,22 +21,22 @@ namespace Service
             _mapper = mapper;
         }
 
-        public Guid AddCategory(CategoryDto categoryDto)
+        public async Task<Guid> AddCategoryAsync(CategoryDto categoryDto)
         {
             var category = _mapper.Map<Category>(categoryDto);
             category.Id = Guid.NewGuid();
             _repositoryManager.CategoryRepository.AddCategory(category);
-            _repositoryManager.Save();
+            await _repositoryManager.SaveAsync();
             return category.Id;
         }
 
-        public void DeleteCategory(Guid id)
+        public async Task DeleteCategoryAsync(Guid id)
         {
-            var category = _repositoryManager.CategoryRepository.GetCategory(id);
+            var category = _repositoryManager.CategoryRepository.GetCategoryById(id);
             if (category != null)
             {
                 _repositoryManager.CategoryRepository.DeleteCategory(category);
-                _repositoryManager.Save();
+                await _repositoryManager.SaveAsync();
             }
             else
             {
@@ -44,31 +44,31 @@ namespace Service
             }
         }
 
-        public IEnumerable<CategoryDto> GetCategories()
+        public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync(CategoryParameters categoryParameters)
         {
-            var result = _repositoryManager.CategoryRepository.GetCategories().ToList();
+            var result = await _repositoryManager.CategoryRepository.GetCategoriesAsync(categoryParameters);
             var categoryDto = _mapper.Map<IEnumerable<CategoryDto>>(result);
             _loggerManager.LogInfo("Category Accessed");
             return categoryDto;
         }
 
-        public CategoryDto GetCategoryById(Guid id)
+        public async Task<CategoryDto> GetCategoryByIdAsync(Guid id)
         {
-            var result = _repositoryManager.CategoryRepository.GetCategory(id);
+            var result = await _repositoryManager.CategoryRepository.GetCategoryByIdAsync(id);
             var categoryDto = _mapper.Map<CategoryDto>(result);
             return categoryDto;
         }
 
-        public void UpdateCategory(CategoryDto categoryDto)
+        public async Task UpdateCategoryAsync(CategoryDto categoryDto)
         {
-            var category = _repositoryManager.CategoryRepository.GetCategory(categoryDto.Id);
+            var category = await _repositoryManager.CategoryRepository.GetCategoryByIdAsync(categoryDto.Id);
             if (category != null)
             {
                 category.Id = categoryDto.Id;
                 category.Name = categoryDto.Name;
                 category.Description = categoryDto.Description;
                 _repositoryManager.CategoryRepository.UpdateCategory(category);
-                _repositoryManager.Save();
+                await _repositoryManager.SaveAsync();
             }
             else
             {
