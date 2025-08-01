@@ -11,10 +11,8 @@ namespace Contracts
      */
     public interface IRepositoryManager
     {
-        public ICompanyRepository CompanyRepository { get; }
-        public IEmployeeRepository EmployeeRepository { get; }
+        public ICustomerRepository CustomerRepository { get; }
 
-        public ICategoryRepository CategoryRepository { get; }
         Task SaveAsync();
 
         void Save();

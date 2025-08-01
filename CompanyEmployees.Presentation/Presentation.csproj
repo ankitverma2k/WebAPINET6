@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\CategoryController.cs" />
+    <Compile Remove="Controllers\CompaniesController.cs" />
+    <Compile Remove="Controllers\EmployeesController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
 

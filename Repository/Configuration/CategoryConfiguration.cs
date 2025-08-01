@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Repository.Configuration
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            builder.HasData(new Category { Id = Guid.NewGuid(), Description = "Test category", Name = "Category 1" });
+            builder.HasData(new Customer { Id = Guid.NewGuid(), FirstName = "Test ", LastName = "Test 1" });
         }
     }
 }

@@ -10,27 +10,20 @@ namespace Repository
     public class RepositoryManager : IRepositoryManager
     {
         private readonly RepositoryContext _context;
-        private readonly Lazy<ICompanyRepository> _companyRepository;
-        private readonly Lazy<IEmployeeRepository> _employeeRepository;
-        private readonly Lazy<ICategoryRepository> _categoryRepository;
+
+        private readonly Lazy<ICustomerRepository> _customerRepository;
         public RepositoryManager(RepositoryContext repositoryContext)
         {
             _context = repositoryContext;
-            _companyRepository = new Lazy<ICompanyRepository>(() => new CompanyRepository(_context));
-            _employeeRepository = new Lazy<IEmployeeRepository>(() => new EmployeeRepository(_context));
-            _categoryRepository = new Lazy<ICategoryRepository>(() => new CategoryRepository(_context));
+
+            _customerRepository = new Lazy<ICustomerRepository>(() => new CustomerRepository(_context));
         }
 
-
-        public ICompanyRepository CompanyRepository => _companyRepository.Value;
-
-        public IEmployeeRepository EmployeeRepository => _employeeRepository.Value;
-
-        public ICategoryRepository CategoryRepository => _categoryRepository.Value;
+        public ICustomerRepository CustomerRepository => _customerRepository.Value;
 
         public Task SaveAsync() => _context.SaveChangesAsync();
 
-        public void Save()=>_context.SaveChanges();
+        public void Save() => _context.SaveChanges();
 
     }
 }
