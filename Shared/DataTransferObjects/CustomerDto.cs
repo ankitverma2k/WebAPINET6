@@ -13,7 +13,7 @@ namespace Shared.DataTransferObjects
      string LastName,
      string Email,
      string PhoneNumber,
-     DateTime DateOfBirth,
+     string DateOfBirth,
      string Address,
      string City,
      string State,

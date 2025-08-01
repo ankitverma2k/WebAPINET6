@@ -9,7 +9,7 @@ namespace WebAPINET6
         public MappingProfile()
         {
             CreateMap<Customer, CustomerDto>();
-
+            CreateMap <CustomerDto, Customer>();
         }
     }
 }
