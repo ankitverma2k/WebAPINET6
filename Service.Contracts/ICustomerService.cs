@@ -10,7 +10,7 @@ namespace Service.Contracts
     public interface ICustomerService
     {
         Task DeleteCustomerAsync(Guid id);
-        Task UpdateCustomerAsync(CustomerDto customerDto);
+        Task UpdateCustomerAsync(Guid id, CustomerDto customerDto);
         Task<Guid> AddCustomerAsync(CustomerDto customerDto);
         Task<IEnumerable<CustomerDto>> GetAllCustomersAsync();
         Task<CustomerDto> GetCustomerByIdAsync(Guid id);

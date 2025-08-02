@@ -1,4 +1,6 @@
 ﻿
+using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -22,13 +24,15 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("customers")]
+
         public async Task<IActionResult> GetCustomers()
         {
             return Ok(await _serviceManager.CustomerService.GetAllCustomersAsync());
         }
 
-        [HttpGet (Name = "GetCustomer")]
+        [HttpGet(Name = "GetCustomer")]
         [Route("{id:guid}")]
         public async Task<IActionResult> GetCustomer(Guid id)
         {
@@ -48,6 +52,27 @@ namespace Presentation.Controllers
                 return UnprocessableEntity(ModelState);
             var Id = await _serviceManager.CustomerService.AddCustomerAsync(customer);
             return CreatedAtRoute("GetCustomer", new { id = Id });
+        }
+
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateCustomer(Guid id, [FromBody] CustomerDto customer)
+        {
+            if (customer is null)
+                return BadRequest("Customer object is null");
+            if (!ModelState.IsValid)
+                return UnprocessableEntity(ModelState);
+
+
+            var updatedCustomer = await _serviceManager.CustomerService.GetCustomerByIdAsync(id);
+            if (updatedCustomer is null)
+                return NotFound();
+
+
+            // Update the customer
+            await _serviceManager.CustomerService.UpdateCustomerAsync(id, customer);
+
+            return NoContent();
         }
     }
 }

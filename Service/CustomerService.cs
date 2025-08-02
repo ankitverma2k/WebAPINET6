@@ -70,9 +70,9 @@ namespace Service
             return await Task.FromResult(customerDto);
         }
 
-        public async Task UpdateCustomerAsync(CustomerDto customerDto)
+        public async Task UpdateCustomerAsync(Guid id,CustomerDto customerDto)
         {
-            var customer = _repositoryManager.CustomerRepository.GetCustomerById(customerDto.Id, trackChanges: true);
+            var customer = _repositoryManager.CustomerRepository.GetCustomerById(id, trackChanges: true);
             if (customer == null)
             {
                 throw new CustomerNotFoundException(customerDto.Id);

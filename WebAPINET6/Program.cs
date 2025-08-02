@@ -1,17 +1,35 @@
 using Contracts;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.IdentityModel.Tokens;
 using NLog;
+using System.Text;
 using WebAPINET6.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Register authentication services
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                        ValidAudience = builder.Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                    };
+                });
 
+// Other service registrations
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
-
-//LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
-
 builder.Services.ConfigureCors();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
@@ -29,48 +47,20 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 
 var app = builder.Build();
+// Middleware for authentication and authorization
+app.UseAuthentication();
 
 // Configure the HTTP request pipeline.
 var logger = app.Services.GetRequiredService<ILoggerManager>();
 app.ConfigureExceptionHandler(logger);
 if (app.Environment.IsProduction())
     app.UseHsts();
+
 app.UseHttpsRedirection();
-app.UseCors("CorsPolicy");
+app.UseRouting();
+
 app.UseAuthorization();
+app.UseCors("CorsPolicy");
 
-//app.Use(async (context, next) =>
-//{
-//    Console.WriteLine("Middleware 1 executed");
-//    await next.Invoke();
-//    Console.WriteLine("Middleware 1 ends");
-//});
-
-//app.Map("/usemapbuilder", builder =>
-//{
-//    builder.Use(async (context, next) =>
-//    {
-//        Console.WriteLine("Message from Map Use");
-//        await next.Invoke();
-//        Console.WriteLine("Message from Map Use Ends");
-//    });
-//    builder.Run(async context =>
-//    {
-//        Console.WriteLine("Message from Map Use 2");
-//        await context.Response.WriteAsync("From Map Run");
-//    });
-
-
-
-//});
-
-
-//app.Run(async context =>
-//{
-//    Console.WriteLine("Middleware 2 starts");
-//    await context.Response.WriteAsync("Hello from Terminal Middleware");
-
-
-//});
 app.MapControllers();
 app.Run(); // This is important to application to run.
