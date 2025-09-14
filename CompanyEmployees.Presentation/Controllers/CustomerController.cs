@@ -66,16 +66,11 @@ namespace Presentation.Controllers
             if (!ModelState.IsValid)
                 return UnprocessableEntity(ModelState);
 
-
             var updatedCustomer = await _serviceManager.CustomerService.GetCustomerByIdAsync(id);
             if (updatedCustomer is null)
                 return NotFound();
-
-
-            // Update the customer
-
+                        // Update the customer
             await _serviceManager.CustomerService.UpdateCustomerAsync(id, customer);
-
             return NoContent();
         }
 
