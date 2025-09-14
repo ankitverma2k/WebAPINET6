@@ -22,7 +22,7 @@ namespace Repository
 
         public void DeleteCustomer(Customer customer) => Delete(customer);
 
-        public Customer? GetCustomerById(Guid id, bool trackChanges) => FindByCondition(c => c.Id.Equals(id), trackChanges).SingleOrDefault();
+        public Customer? GetCustomerById(Guid id, bool trackChanges) => FindByCondition(c => c.Id.Equals(id), trackChanges).FirstOrDefault();
 
         public IEnumerable<Customer> GetCustomers(bool trackChanges) => FindAll(trackChanges).OrderBy(c => c.FirstName).ToList();
 

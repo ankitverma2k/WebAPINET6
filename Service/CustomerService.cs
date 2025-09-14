@@ -35,6 +35,7 @@ namespace Service
             return customerToReturn.Id;
         }
 
+        
         public async Task DeleteCustomerAsync(Guid id)
         {
 
@@ -43,6 +44,7 @@ namespace Service
             {
                 _repositoryManager.CustomerRepository.DeleteCustomer(customer);
                 await _repositoryManager.SaveAsync();
+                _loggerManager.LogInfo($"Customer with id: {id} deleted");
             }
             else
             {
@@ -77,6 +79,7 @@ namespace Service
             {
                 throw new CustomerNotFoundException(customerDto.Id);
             }
+          
             _mapper.Map(customerDto, customer);
             _repositoryManager.CustomerRepository.UpdateCustomer(customer);
             await _repositoryManager.SaveAsync();

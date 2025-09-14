@@ -23,8 +23,8 @@ namespace Presentation.Controllers
             _serviceManager = serviceManager;
         }
 
+        //Get api/customers
         [HttpGet]
-        [Authorize]
         [Route("customers")]
 
         public async Task<IActionResult> GetCustomers()
@@ -32,6 +32,8 @@ namespace Presentation.Controllers
             return Ok(await _serviceManager.CustomerService.GetAllCustomersAsync());
         }
 
+
+        //Get api/customer/{id}
         [HttpGet(Name = "GetCustomer")]
         [Route("{id:guid}")]
         public async Task<IActionResult> GetCustomer(Guid id)
@@ -54,6 +56,7 @@ namespace Presentation.Controllers
             return CreatedAtRoute("GetCustomer", new { id = Id });
         }
 
+        // api/customer/{id}
         [HttpPut]
         [Route("{id:guid}")]
         public async Task<IActionResult> UpdateCustomer(Guid id, [FromBody] CustomerDto customer)
@@ -70,8 +73,21 @@ namespace Presentation.Controllers
 
 
             // Update the customer
+
             await _serviceManager.CustomerService.UpdateCustomerAsync(id, customer);
 
+            return NoContent();
+        }
+
+        // api/customer/{id}
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteCustomer(Guid id)
+        {
+            var customer = await _serviceManager.CustomerService.GetCustomerByIdAsync(id);
+            if (customer is null)
+                return NotFound();
+            await _serviceManager.CustomerService.DeleteCustomerAsync(id);
             return NoContent();
         }
     }
