@@ -8,17 +8,17 @@ namespace WebAPINET6
     {
         public MappingProfile()
         {
-            CreateMap<Company, CompanyDto>()
-               .ForCtorParam("FullAddress", opt =>
-               opt.MapFrom((src, ctx) => $"{src.Address} {src.Country}"));
+            //CreateMap<Company, CompanyDto>()
+            //   .ForCtorParam("FullAddress", opt =>
+            //   opt.MapFrom((src, ctx) => $"{src.Address} {src.Country}"));
 
-            CreateMap<CompanyForCreationDto, Company>();
+            //CreateMap<CompanyForCreationDto, Company>();
 
-            CreateMap<Employee, EmployeeDto>();
-            CreateMap<EmployeeForCreationDto, Employee>();
-            CreateMap<EmployeeForUpdateDto, Employee>();
-            CreateMap<Category, CategoryDto>();
-            CreateMap<CategoryDto, Category>();
+            //CreateMap<Employee, EmployeeDto>();
+            //CreateMap<EmployeeForCreationDto, Employee>();
+            //CreateMap<EmployeeForUpdateDto, Employee>();
+            //CreateMap<Category, CategoryDto>();
+            //CreateMap<CategoryDto, Category>();
         }
     }
 }
