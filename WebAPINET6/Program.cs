@@ -12,11 +12,14 @@ builder.Services.AddControllers();
 
 //LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.AddMemoryCache();
 builder.Services.Configure<ApiBehaviorOptions>(options => { options.SuppressModelStateInvalidFilter = true; });
 builder.Services.AddControllers(
     config => { config.RespectBrowserAcceptHeader = true; })
@@ -37,8 +40,8 @@ if (app.Environment.IsProduction())
     app.UseHsts();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
-app.UseAuthorization();
 
+app.UseAuthentication(); app.UseAuthorization();
 //app.Use(async (context, next) =>
 //{
 //    Console.WriteLine("Middleware 1 executed");

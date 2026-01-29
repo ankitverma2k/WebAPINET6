@@ -10,7 +10,7 @@ namespace WebAPINET6
         {
             CreateMap<Company, CompanyDto>()
                .ForCtorParam("FullAddress", opt =>
-               opt.MapFrom(x => string.Join(' ', x.Address, x.Country)));
+               opt.MapFrom((src, ctx) => $"{src.Address} {src.Country}"));
 
             CreateMap<CompanyForCreationDto, Company>();
 
