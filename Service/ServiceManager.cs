@@ -11,19 +11,16 @@ namespace Service
 {
     public class ServiceManager : IServiceManager
     {
-         readonly Lazy<ICompanyService> _companyService;
-         readonly Lazy<IEmployeeService> _employeeService;
-         readonly Lazy<ICategoryService> _categoryService;
+        private readonly Lazy<ICustomerService> _customerService;
+
         public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager loggerManager, IMapper mapper)
         {
-            _companyService = new Lazy<ICompanyService>(() => new CompanyService(repositoryManager, loggerManager, mapper));
-            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeService(repositoryManager, loggerManager, mapper));
-            _categoryService = new Lazy<ICategoryService>(() => new CategoryService(repositoryManager, loggerManager, mapper));
+            _customerService = new Lazy<ICustomerService>(() => new CustomerService(repositoryManager, loggerManager, mapper));
         }
-        public ICompanyService CompanyService => _companyService.Value;
-        public IEmployeeService EmployeeService => _employeeService.Value;
-        public ICategoryService CategoryService => _categoryService.Value;
 
+        public ICustomerService CompanyService => _customerService.Value;
+
+        public ICustomerService CustomerService => _customerService.Value;
     }
 }
 

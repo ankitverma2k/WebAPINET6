@@ -11,7 +11,7 @@ namespace WebAPINET6.ContextFactory
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json").Build();
             var builder = new DbContextOptionsBuilder<RepositoryContext>()
-                .UseSqlServer(configuration.GetConnectionString("sqlConnection"),b=>b.MigrationsAssembly("WebAPINET6"));
+                .UseSqlServer(configuration.GetConnectionString("sqlConnection"),b=>b.MigrationsAssembly("CustomerAPI"));
             return new RepositoryContext(builder.Options);
         }
     }
