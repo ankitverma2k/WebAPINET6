@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 //LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 builder.Services.AddAuthentication();
-builder.Services.ConfigureIdentity();
+//builder.Services.ConfigureIdentity();
 builder.Services.ConfigureCors();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureRepositoryManager();

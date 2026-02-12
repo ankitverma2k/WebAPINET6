@@ -20,8 +20,9 @@ namespace Repository
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CustomerConfiguration()); 
-          
+            // modelBuilder.ApplyConfiguration(new CustomerConfiguration()); 
+            base.OnModelCreating(modelBuilder);
+
         }
 
         public DbSet<Customer>? Customers { get; set; }
