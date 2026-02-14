@@ -17,9 +17,6 @@ namespace Service
         {
             _customerService = new Lazy<ICustomerService>(() => new CustomerService(repositoryManager, loggerManager, mapper));
         }
-
-        public ICustomerService CompanyService => _customerService.Value;
-
         public ICustomerService CustomerService => _customerService.Value;
     }
 }

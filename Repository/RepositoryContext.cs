@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-    //public class RepositoryContext : DbContext
-    public class RepositoryContext : IdentityDbContext<User>
+    public class RepositoryContext : DbContext
     {
         public RepositoryContext(DbContextOptions options) 
             : base(options)
@@ -20,9 +19,7 @@ namespace Repository
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.ApplyConfiguration(new CustomerConfiguration()); 
             base.OnModelCreating(modelBuilder);
-
         }
 
         public DbSet<Customer>? Customers { get; set; }
